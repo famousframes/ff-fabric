@@ -42,7 +42,7 @@
 
     <!-- Panel: Text -->
     <div class="panel panel-default">
-      <div class="panel-heading">Text hinzufügen</div>
+      <div class="panel-heading no-select">Text hinzufügen</div>
       <div class="panel-body">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Hallo Welt!" [(ngModel)]="textString"/>
@@ -57,7 +57,7 @@
     <!-- /Panel: Text -->
 
     <!-- Panel: Library -->
-    <div class="panel panel-default panel-library">
+    <div class="panel panel-default panel-library no-select">
       <div class="panel-heading">Bibliotheken</div>
       <div class="panel-body">
         <div class="custom-item">
@@ -131,14 +131,14 @@
   <div class="col-lg-2 col-md-3">
 
     <!-- Panel: Layers -->
-    <div class="panel panel-default">
+    <div class="panel panel-default no-select">
       <div class="panel-heading">Ebenen</div>
       <div class="panel-body layer-list max-height">
         <ul class="list-group" dnd-sortable-container [sortableData]="layers.reverse()">
           <!-- User created layers -->
           <li *ngFor="let item of layers; let i = index" class="list-group-item" ngbTooltip="{{item.title}}"
               data-placement="left"
-              dnd-sortable [sortableIndex]="layers.length - i - 1"
+              dnd-sortable [dragEnabled]="item.selectable" [sortableIndex]="layers.length - i - 1"
               (click)="selectLayer(item)" (onDropSuccess)="updateLayerSort(i)" [ngClass]="{'active': item.active}">
             <i class="fa fa-fw fa-ellipsis-v" [ngClass]="{'text-muted': !item.active}"></i>
             <div class="layer-visibility-toggle" (click)="toggleLayer(item)"><i class="fa fa-fw fa-eye"

@@ -139,7 +139,7 @@
           <li *ngFor="let item of layers; let i = index" class="list-group-item" ngbTooltip="{{item.title}}"
               data-placement="left"
               dnd-sortable [dragEnabled]="item.selectable" [sortableIndex]="layers.length - i - 1"
-              (click)="selectLayer(item)" (onDropSuccess)="updateLayerSort(i)" [ngClass]="{'active': item.active}">
+              (click)="selectLayer(item)" (onDropSuccess)="updateLayerSort()" [ngClass]="{'active': item.active}">
             <i class="fa fa-fw fa-ellipsis-v" [ngClass]="{'text-muted': !item.active}"></i>
             <div class="layer-visibility-toggle" (click)="toggleLayer(item)"><i class="fa fa-fw fa-eye"
                                                                                 [ngClass]="{'fa-eye': item.visible, 'fa-eye-slash': !item.visible}"></i>

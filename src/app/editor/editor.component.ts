@@ -24,8 +24,8 @@ export class EditorComponent implements OnInit {
     DOWN: 3
   };
   private DirectionSteps: any = {
-    REGULAR: 10,
-    SHIFT: 50
+    REGULAR: 1,
+    SHIFT: 5
   };
 
   public presetFonts = ['Arial', 'Serif', 'Helvetica', 'Sans-Serif', 'Open Sans', 'Roboto Slab'];
@@ -222,29 +222,57 @@ export class EditorComponent implements OnInit {
 
   }
 
+  /**
+   * Handles user keyboard input
+   *
+   * @param key
+   * @param event
+   */
   handleKeyPress(key, event) {
-    // console.info(key);
-
     switch(key) {
-      case 37: this.moveSelectedObject(this.Direction.LEFT); event.preventDefault(); break;
-      case 38: this.moveSelectedObject(this.Direction.UP); event.preventDefault(); break;
-      case 39: this.moveSelectedObject(this.Direction.RIGHT); event.preventDefault(); break;
-      case 40: this.moveSelectedObject(this.Direction.DOWN); event.preventDefault(); break;
+      case 37: this.moveSelectedObject(this.Direction.LEFT, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR); event.preventDefault(); break;
+      case 38: this.moveSelectedObject(this.Direction.UP, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR); event.preventDefault(); break;
+      case 39: this.moveSelectedObject(this.Direction.RIGHT, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR); event.preventDefault(); break;
+      case 40: this.moveSelectedObject(this.Direction.DOWN, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR); event.preventDefault(); break;
       case 46: this.removeSelected(); event.preventDefault(); break;
+      case 65: event.ctrlKey ? this.selectAllObjects() : void(0); event.preventDefault(); break;
     }
-
   }
 
-  moveSelectedObject(direction) {
+  /**
+   * Select all objects/layers in canvas
+   *
+   */
+  selectAllObjects() {
+    let objs = this.canvas.getObjects().map(function(o) {
+      return o.set('active', true);
+    });
+
+    let group = new fabric.Group(objs, {
+      originX: 'center',
+      originY: 'center'
+    });
+
+    this.canvas._activeObject = null;
+    this.canvas.setActiveGroup(group.setCoords()).renderAll();
+  }
+
+  /**
+   * Move the current selected object
+   *
+   * @param direction
+   * @param value
+   */
+  moveSelectedObject(direction, value) {
     let activeGroup = this.canvas.getActiveGroup();
     let activeObject = this.canvas.getActiveObject();
 
     if(activeObject) {
       switch (direction) {
-        case this.Direction.LEFT: activeObject.setLeft(activeObject.getLeft() - 10); break;
-        case this.Direction.UP: activeObject.setTop(activeObject.getTop() - 10); break;
-        case this.Direction.RIGHT: activeObject.setLeft(activeObject.getLeft() + 10); break;
-        case this.Direction.DOWN: activeObject.setTop(activeObject.getTop() + 10); break;
+        case this.Direction.LEFT: activeObject.setLeft(activeObject.getLeft() - value); break;
+        case this.Direction.UP: activeObject.setTop(activeObject.getTop() - value); break;
+        case this.Direction.RIGHT: activeObject.setLeft(activeObject.getLeft() + value); break;
+        case this.Direction.DOWN: activeObject.setTop(activeObject.getTop() + value); break;
       }
 
       activeObject.setCoords();
@@ -252,10 +280,10 @@ export class EditorComponent implements OnInit {
     }
     else if (activeGroup) {
       switch (direction) {
-        case this.Direction.LEFT: activeGroup.setLeft(activeGroup.getLeft() - 10); break;
-        case this.Direction.UP: activeGroup.setTop(activeGroup.getTop() - 10); break;
-        case this.Direction.RIGHT: activeGroup.setLeft(activeGroup.getLeft() + 10); break;
-        case this.Direction.DOWN: activeGroup.setTop(activeGroup.getTop() + 10); break;
+        case this.Direction.LEFT: activeGroup.setLeft(activeGroup.getLeft() - value); break;
+        case this.Direction.UP: activeGroup.setTop(activeGroup.getTop() - value); break;
+        case this.Direction.RIGHT: activeGroup.setLeft(activeGroup.getLeft() + value); break;
+        case this.Direction.DOWN: activeGroup.setTop(activeGroup.getTop() + value); break;
       }
 
       activeGroup.setCoords();
@@ -280,17 +308,30 @@ export class EditorComponent implements OnInit {
     this.canvas.setActiveObject(layer);
   }
 
+  /**
+   * Show/Hide layer
+   *
+   * @param layer
+   */
   toggleLayer(layer: any) {
     layer.visible = !layer.visible;
   }
 
+  /**
+   * Locks/Unlocks layer
+   *
+   */
   lockLayer() {
     let layer = this.canvas.getActiveObject();
     layer.evented = !layer.evented;
     layer.selectable = !layer.selectable;
   }
 
-  updateLayerSort(i) {
+  /**
+   * Updates layer index
+   *
+   */
+  updateLayerSort() {
     this.layers.forEach((layer, ind) => {
       this.canvas.moveTo(layer, ind);
     })
@@ -478,10 +519,10 @@ export class EditorComponent implements OnInit {
         });
         break;
     }
+
     this.extend(add, EditorComponent.randomId());
     this.canvas.add(add);
     this.selectItemAfterAdded(add);
-
     this.updateLayers();
   }
 
@@ -561,6 +602,13 @@ export class EditorComponent implements OnInit {
 
   // ELEMENTS //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  /**
+   * Returns styleName from object
+   *
+   * @param styleName
+   * @param object
+   * @returns {any}
+   */
   getActiveStyle(styleName, object) {
     object = object || this.canvas.getActiveObject();
     if (!object) return '';
@@ -570,7 +618,13 @@ export class EditorComponent implements OnInit {
       : (object[styleName] || '');
   }
 
-
+  /**
+   * Sets styleName to given value
+   *
+   * @param styleName
+   * @param value
+   * @param object
+   */
   setActiveStyle(styleName, value, object) {
     object = object || this.canvas.getActiveObject();
     if (!object) return;
@@ -589,7 +643,12 @@ export class EditorComponent implements OnInit {
     this.canvas.renderAll();
   }
 
-
+  /**
+   * Get property for active object
+   *
+   * @param name
+   * @returns {any}
+   */
   getActiveProp(name) {
     let object = this.canvas.getActiveObject();
     if (!object) return '';
@@ -597,6 +656,12 @@ export class EditorComponent implements OnInit {
     return object[name] || '';
   }
 
+  /**
+   * Set property for active object
+   *
+   * @param name
+   * @param value
+   */
   setActiveProp(name, value) {
     let object = this.canvas.getActiveObject();
     if (!object) return;
@@ -604,6 +669,11 @@ export class EditorComponent implements OnInit {
     this.canvas.renderAll();
   }
 
+  /**
+   * Set scale for active object
+   *
+   * @param value
+   */
   setActiveScale(value) {
     let object = this.canvas.getActiveObject();
     if (!object) return;
@@ -650,6 +720,7 @@ export class EditorComponent implements OnInit {
       this.updateLayers();
     }
   }
+
 
   getId() {
     this.props.id = this.canvas.getActiveObject().toObject().id;

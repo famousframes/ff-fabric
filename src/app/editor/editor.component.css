@@ -40,6 +40,10 @@ div.font-select {
 
 }
 
+.panel-library .custom-item:last-child {
+    margin-bottom: -15px;
+}
+
 .custom-item {
     border-top: 1px solid #ddd;
     margin-left: -15px;

@@ -40,6 +40,7 @@
     "core-js": "^2.4.1",
     "fabric": "^1.7.16",
     "font-awesome": "^4.7.0",
+    "ng-lazyload-image": "^3.3.5",
     "ng2-dnd": "^4.2.0",
     "ng2-file-upload": "^1.2.1",
     "ng2-nouislider": "^1.7.4",

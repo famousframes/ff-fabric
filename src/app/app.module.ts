@@ -6,7 +6,6 @@ import { CoreModule } from 'app/core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShellComponent } from 'app/core/shell/shell.component';
 
-
 @NgModule({
   declarations: [],
   imports: [

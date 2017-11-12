@@ -30,6 +30,36 @@ export class EditorComponent implements OnInit {
 
   public presetFonts = ['Arial', 'Serif', 'Helvetica', 'Sans-Serif', 'Open Sans', 'Roboto Slab'];
 
+  public selectedLibrary: string = 'brands';
+  public library: any = {
+    brands: [
+      {name: 'Audi', src: 'assets/libraries/brands/audi-sd.png'},
+      {name: 'BMW', src: 'assets/libraries/brands/bmw-sd.png'},
+      {name: 'Citroen', src: 'assets/libraries/brands/citroen-sd.png'},
+      {name: 'Fiat', src: 'assets/libraries/brands/fiat-sd.png'},
+      {name: 'Ford', src: 'assets/libraries/brands/ford-sd.png'},
+      {name: 'General Motors', src: 'assets/libraries/brands/generalmotors-sd.png'},
+      {name: 'Honda', src: 'assets/libraries/brands/honda-sd.png'},
+      {name: 'Hyundai', src: 'assets/libraries/brands/hyundai-sd.png'},
+      {name: 'Infiniti', src: 'assets/libraries/brands/infiniti-sd.png'},
+      {name: 'Kia', src: 'assets/libraries/brands/kia-sd.png'},
+      {name: 'Lexus', src: 'assets/libraries/brands/lexus-sd.png'},
+      {name: 'Mazda', src: 'assets/libraries/brands/mazda-sd.png'},
+      {name: 'Mercedes-Benz', src: 'assets/libraries/brands/mercedesbenz-sd.png'},
+      {name: 'Mini', src: 'assets/libraries/brands/mini-sd.png'},
+      {name: 'Nissan', src: 'assets/libraries/brands/nissan-sd.png'},
+      {name: 'Peugeot', src: 'assets/libraries/brands/peugeot-sd.png'},
+      {name: 'Porsche', src: 'assets/libraries/brands/porsche-sd.png'},
+      {name: 'Renault', src: 'assets/libraries/brands/renault-sd.png'},
+      {name: 'Seat', src: 'assets/libraries/brands/seat-sd.png'},
+      {name: 'Skoda', src: 'assets/libraries/brands/skoda-sd.png'},
+      {name: 'Tesla', src: 'assets/libraries/brands/tesla-sd.png'},
+      {name: 'Toyota', src: 'assets/libraries/brands/toyota-sd.png'},
+      {name: 'Volkswagen', src: 'assets/libraries/brands/volkswagen-sd.png'},
+      {name: 'Volvo', src: 'assets/libraries/brands/volvo-sd.png'}
+    ]
+  };
+
   public font: Font = new Font({
     family: 'Roboto',
     size: '14px',

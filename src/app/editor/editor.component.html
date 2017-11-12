@@ -57,57 +57,22 @@
     <!-- /Panel: Text -->
 
     <!-- Panel: Library -->
-    <div class="panel panel-default">
-      <div class="panel-heading">Hersteller-Logos</div>
-      <div class="panel-body max-height">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Audi" title="Audi"
-             src="assets/libraries/brands/audi-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="BMW" title="BMW"
-             src="assets/libraries/brands/bmw-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Citroen" title="Citroen"
-             src="assets/libraries/brands/citroen-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Fiat" title="Fiat"
-             src="assets/libraries/brands/fiat-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Ford" title="Ford"
-             src="assets/libraries/brands/ford-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="General Motors" title="General Motors"
-             src="assets/libraries/brands/generalmotors-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Honda" title="Honda"
-             src="assets/libraries/brands/honda-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Hyundai" title="Hyundai"
-             src="assets/libraries/brands/hyundai-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Infiniti" title="Infiniti"
-             src="assets/libraries/brands/infiniti-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Kia" title="Kia"
-             src="assets/libraries/brands/kia-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Lexus" title="Lexus"
-             src="assets/libraries/brands/lexus-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Mazda" title="Mazda"
-             src="assets/libraries/brands/mazda-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Mercedes-Benz" title="Mercedes-Benz"
-             src="assets/libraries/brands/mercedesbenz-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Mini" title="Mini"
-             src="assets/libraries/brands/mini-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Nissan" title="Nissan"
-             src="assets/libraries/brands/nissan-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Peugeot" title="Peugeot"
-             src="assets/libraries/brands/peugeot-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Porsche" title="Porsche"
-             src="assets/libraries/brands/porsche-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Renault" title="Renault"
-             src="assets/libraries/brands/renault-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Seat" title="Seat"
-             src="assets/libraries/brands/seat-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Skoda" title="Skoda"
-             src="assets/libraries/brands/skoda-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Tesla" title="Tesla"
-             src="assets/libraries/brands/tesla-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Toyota" title="Toyota"
-             src="assets/libraries/brands/toyota-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Volkswagen" title="Volkswagen"
-             src="assets/libraries/brands/volkswagen-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Volvo" title="Volvo"
-             src="assets/libraries/brands/volvo-sd.png">
+    <div class="panel panel-default panel-library">
+      <div class="panel-heading">Bibliotheken</div>
+      <div class="panel-body">
+        <div class="custom-item">
+          <div class="custom-item-title">Gewählte Bibliothek</div>
+          <div class="custom-item-body">
+            <select class="form-control" ([ngModel])="selectedLibrary">
+              <option value="brands">Hersteller</option>
+            </select>
+          </div>
+        </div>
+        <div class="custom-item max-height">
+          <div class="custom-item-body">
+            <img class="images-item" *ngFor="let image of library[selectedLibrary]" [lazyLoad]="image.src" ngbTooltip="{{image.name}}" title="{{image.name}}" (click)="getImgPolaroid($event)" />
+          </div>
+        </div>
       </div>
     </div>
     <!-- /Panel: Library -->

@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontPickerModule } from 'ngx-font-picker';
 import { FONT_PICKER_CONFIG } from 'ngx-font-picker';
 import { FontPickerConfigInterface } from 'ngx-font-picker';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 const DEFAULT_FONT_PICKER_CONFIG: FontPickerConfigInterface = {
   // Google API Key
@@ -32,7 +33,8 @@ const routes: Routes = [
     NouisliderModule,
     DndModule.forRoot(),
     NgbModule,
-    FontPickerModule
+    FontPickerModule,
+    LazyLoadImageModule
   ],
   exports: [
     NgbModule

@@ -254,7 +254,13 @@ export class EditorComponent implements OnInit {
     layer.visible = !layer.visible;
   }
 
-  updateLayerSort() {
+  lockLayer() {
+    let layer = this.canvas.getActiveObject();
+    layer.evented = !layer.evented;
+    layer.selectable = !layer.selectable;
+  }
+
+  updateLayerSort(i) {
     this.layers.forEach((layer, ind) => {
       this.canvas.moveTo(layer, ind);
     })

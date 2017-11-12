@@ -9,20 +9,25 @@
     <div class="row">
       <div class="col-lg-12 text-right">
         <button data-toggle="tooltip" data-placement="bottom" ngbTooltip="Als Bild speichern" type="button"
-                class="btn btn-default" (click)="rasterize();"><i class="fa fa-download" aria-hidden="true"></i> Bild
+                class="btn btn-default" (click)="rasterize();"><i class="fa fa-download" aria-hidden="true"></i>
+          Bild
         </button>
         <button data-toggle="tooltip" data-placement="bottom" ngbTooltip="Als SVG speichern" type="button"
-                class="btn btn-default" (click)="rasterizeSVG();"><i class="fa fa-download" aria-hidden="true"></i> SVG
+                class="btn btn-default" (click)="rasterizeSVG();"><i class="fa fa-download" aria-hidden="true"></i>
+          SVG
         </button>
         <button data-toggle="tooltip" data-placement="bottom" ngbTooltip="Schnellspeichern" type="button"
                 class="btn btn-default" (click)="saveCanvasToJSON();"><i class="fa fa-save" aria-hidden="true"></i>
           Schnellspeichern
         </button>
-        <button data-toggle="tooltip" data-placement="bottom" ngbTooltip="Schnellladen" type="button" class="btn btn-default"
-                (click)="loadCanvasFromJSON();"><i class="fa fa-save" aria-hidden="true"></i> Schnellladen
+        <button data-toggle="tooltip" data-placement="bottom" ngbTooltip="Schnellladen" type="button"
+                class="btn btn-default"
+                (click)="loadCanvasFromJSON();"><i class="fa fa-save" aria-hidden="true"></i>
+          Schnellladen
         </button>
         <button data-toggle="tooltip" data-placement="bottom" ngbTooltip="Alles löschen" type="button"
-                class="btn btn-default" (click)="confirmClear();"><i class="fa fa-ban" aria-hidden="true"></i> Löschen
+                class="btn btn-default" (click)="confirmClear();"><i class="fa fa-ban" aria-hidden="true"></i>
+          Löschen
         </button>
       </div>
     </div>
@@ -42,7 +47,7 @@
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Hallo Welt!" [(ngModel)]="textString"/>
           <span class="input-group-btn">
-            <button id="add-text" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+            <button id="add-text" class="btn btn-default" ngbTooltip="Text einfügen"
                     [disabled]="textString == ''"
                     title="Text hinzufügen" (click)="addText()"><i class="fa fa-plus" aria-hidden="true"></i></button>
           </span>
@@ -57,7 +62,8 @@
       <div class="panel-body max-height">
         <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Audi" title="Audi"
              src="assets/libraries/brands/audi-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="BMW" title="BMW" src="assets/libraries/brands/bmw-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="BMW" title="BMW"
+             src="assets/libraries/brands/bmw-sd.png">
         <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Citroen" title="Citroen"
              src="assets/libraries/brands/citroen-sd.png">
         <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Fiat" title="Fiat"
@@ -72,7 +78,8 @@
              src="assets/libraries/brands/hyundai-sd.png">
         <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Infiniti" title="Infiniti"
              src="assets/libraries/brands/infiniti-sd.png">
-        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Kia" title="Kia" src="assets/libraries/brands/kia-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Kia" title="Kia"
+             src="assets/libraries/brands/kia-sd.png">
         <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Lexus" title="Lexus"
              src="assets/libraries/brands/lexus-sd.png">
         <img class="images-item" (click)="getImgPolaroid($event)" ngbTooltip="Mazda" title="Mazda"
@@ -129,17 +136,17 @@
     <!-- Panel: Form-Elements -->
     <div class="panel panel-default">
       <div class="panel-heading">Form-Elemente</div>
-      <div class="panel-body text-center max-height">
+      <div class="panel-body text-center">
         <div class="btn-group btn-group-lg" role="group" aria-label="Form-Elemente">
-          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Rechteck"
+          <button type="button" class="btn btn-default" ngbTooltip="Rechteck" title="Rechteck"
                   (click)="addShape('rectangle');">&#9646;</button>
-          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Quadrat"
+          <button type="button" class="btn btn-default" ngbTooltip="Quadrat" title="Quadrat"
                   (click)="addShape('square');">&#9724;</button>
-          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Dreieck"
+          <button type="button" class="btn btn-default" ngbTooltip="Dreieck" title="Dreieck"
                   (click)="addShape('triangle');">&#9650;</button>
-          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Kreis"
+          <button type="button" class="btn btn-default" ngbTooltip="Kreis" title="Kreis"
                   (click)="addShape('circle');"><i class="fa fa-circle"></i></button>
-          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Stern"
+          <button type="button" class="btn btn-default" ngbTooltip="Stern" title="Stern"
                   (click)="addShape('star');"><i class="fa fa-star"></i></button>
         </div>
       </div>
@@ -162,17 +169,19 @@
     <div class="panel panel-default">
       <div class="panel-heading">Ebenen</div>
       <div class="panel-body layer-list max-height">
-        <ul class="list-group" dnd-sortable-container [sortableData]="layers">
+        <ul class="list-group" dnd-sortable-container [sortableData]="layers.reverse()">
           <!-- User created layers -->
-          <li *ngFor="let item of layers.reverse(); let i = index" class="list-group-item" ngbTooltip="{{item.title}}" data-placement="left"
-              dnd-sortable [sortableIndex]="i"
-              (click)="selectLayer(item)" (onDropSuccess)="updateLayerSort()" [ngClass]="{'active': item.active}">
+          <li *ngFor="let item of layers; let i = index" class="list-group-item" ngbTooltip="{{item.title}}"
+              data-placement="left"
+              dnd-sortable [sortableIndex]="layers.length - i - 1"
+              (click)="selectLayer(item)" (onDropSuccess)="updateLayerSort(i)" [ngClass]="{'active': item.active}">
             <i class="fa fa-fw fa-ellipsis-v" [ngClass]="{'text-muted': !item.active}"></i>
             <div class="layer-visibility-toggle" (click)="toggleLayer(item)"><i class="fa fa-fw fa-eye"
                                                                                 [ngClass]="{'fa-eye': item.visible, 'fa-eye-slash': !item.visible}"></i>
             </div>
             <div class="layer-title">{{item.title}}</div>
             <div class="layer-type pull-right">
+              <i class="fa fa-fw fa-lock" *ngIf="!item.selectable"></i>
               <i class="fa fa-fw {{elementTypes[item.type].icon}}" [ngClass]="{'text-muted': !item.active}"></i>
             </div>
             <div class="clearfix"></div>
@@ -188,24 +197,28 @@
       <div class="panel-footer">
         <div class="btn-group btn-group-sm pull-right" role="group" aria-label="Ebenen-Aktionen"
              [ngClass]="{'btn-group-disabled': !selected}">
-          <button data-toggle="tooltip" data-placement="bottom" title="Element löschen" type="button"
+          <button ngbTooltip="Ebene löschen" title="Ebene löschen" type="button"
                   class="btn btn-default" [disabled]="!selected" (click)="removeSelected();"><i
               class="fa fa-trash text-danger"
               aria-hidden="true"></i>
           </button>
-          <button data-toggle="tooltip" data-placement="bottom" title="In den Hintergrund" type="button"
+          <button ngbTooltip="In den Hintergrund" title="In den Hintergrund" type="button"
                   class="btn btn-default" [disabled]="!selected" (click)="sendToBack();"><i class="fa fa-level-down"
                                                                                             aria-hidden="true"></i>
           </button>
-          <button data-toggle="tooltip" data-placement="bottom" title="In den Vordergrund" type="button"
+          <button ngbTooltip="In den Vordergrund" title="In den Vordergrund" type="button"
                   class="btn btn-default" [disabled]="!selected" (click)="bringToFront();"><i class="fa fa-level-up"
                                                                                               aria-hidden="true"></i>
           </button>
-          <button data-toggle="tooltip" data-placement="bottom" title="Duplizieren" type="button"
+          <button ngbTooltip="Ebene duplizieren" title="Duplizieren" type="button"
                   class="btn btn-default" [disabled]="!selected || selected.type == 'group'" (click)="clone();"><i
               class="fa fa-clone" aria-hidden="true"></i></button>
-          <button data-toggle="tooltip" data-placement="bottom" title="Abwählen" type="button" class="btn btn-default"
+          <button ngbTooltip="Auswahl aufheben" title="Auswahl aufheben" type="button" class="btn btn-default"
                   [disabled]="!selected" (click)="cleanSelect()"><i class="fa fa-remove" aria-hidden="true"></i>
+          </button>
+          <button ngbTooltip="Ebene sperren" title="Ebene sperren" type="button" class="btn btn-default"
+                  [disabled]="!selected" (click)="lockLayer()">
+            <i class="fa fa-lock" [ngClass]="{'fa-lock': !selected || (selected && selected.selectable), 'fa-unlock': (selected && !selected.selectable)}" aria-hidden="true"></i>
           </button>
         </div>
         <div class="clearfix"></div>
@@ -243,7 +256,9 @@
         <div class="custom-item" *ngIf="selected && selected.type != 'group'">
           <div class="custom-item-title">Transparenz</div>
           <div class="custom-item-body">
-            <nouislider [config]="sliderConfig" [min]="0" [max]="100" [step]="1" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.opacity" (ngModelChange)="setOpacity()"></nouislider>
+            <nouislider [config]="sliderConfig" [min]="0" [max]="100" [step]="1" [tooltips]="[true]"
+                        [connect]="[true, false]" [(ngModel)]="props.opacity"
+                        (ngModelChange)="setOpacity()"></nouislider>
           </div>
         </div>
 
@@ -266,7 +281,9 @@
         <div class="custom-item" *ngIf="selected && textEditor || selected && shapeEditor">
           <div class="custom-item-title">Rahmenbreite</div>
           <div class="custom-item-body">
-            <nouislider [config]="{pips: {mode: 'steps', density: 10}}" [min]="0" [max]="10" [step]="1" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.strokeWidth" (ngModelChange)="setStrokeWidth()"></nouislider>
+            <nouislider [config]="{pips: {mode: 'steps', density: 10}}" [min]="0" [max]="10" [step]="1"
+                        [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.strokeWidth"
+                        (ngModelChange)="setStrokeWidth()"></nouislider>
           </div>
         </div>
 
@@ -274,7 +291,11 @@
           <div class="custom-item-title">Schriftart</div>
           <div class="custom-item-body">
 
-            <div class="font-select" [(fontPicker)]="font" [fpWidth]="'auto'" [fpPosition]="'bottom'" [fpPositionOffset]="'0%'" [fpPositionRelativeToArrow]="false" [fpPresetLabel]="'Standardschriften'" [fpPresetFonts]="presetFonts" [fpSizeSelect]="true" [fpStyleSelect]="false" (fontPickerChange)="setWebfont()">{{font.family}} - {{font.size}}</div>
+            <div class="font-select" [(fontPicker)]="font" [fpWidth]="'auto'" [fpPosition]="'bottom'"
+                 [fpPositionOffset]="'0%'" [fpPositionRelativeToArrow]="false" [fpPresetLabel]="'Standardschriften'"
+                 [fpPresetFonts]="presetFonts" [fpSizeSelect]="true" [fpStyleSelect]="false"
+                 (fontPickerChange)="setWebfont()">{{font.family}} - {{font.size}}
+            </div>
 
             <select [(ngModel)]="props.fontFamily" class="form-control" (change)="setFontFamily()" *ngIf="false">
               <option value="Arial">Arial</option>
@@ -354,21 +375,27 @@
         <div class="custom-item" *ngIf="false">
           <div class="custom-item-title">Schriftgröße</div>
           <div class="custom-item-body">
-            <nouislider [config]="sliderConfig" [min]="5" [max]="120" [step]="1" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.fontSize" (ngModelChange)="setFontSize()"></nouislider>
+            <nouislider [config]="sliderConfig" [min]="5" [max]="120" [step]="1" [tooltips]="[true]"
+                        [connect]="[true, false]" [(ngModel)]="props.fontSize"
+                        (ngModelChange)="setFontSize()"></nouislider>
           </div>
         </div>
 
         <div class="custom-item" *ngIf="selected && textEditor">
           <div class="custom-item-title">Zeilenabstand</div>
           <div class="custom-item-body">
-            <nouislider [config]="sliderConfig" [min]="0" [max]="10" [step]="0.1" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.lineHeight" (ngModelChange)="setLineHeight()"></nouislider>
+            <nouislider [config]="sliderConfig" [min]="0" [max]="10" [step]="0.1" [tooltips]="[true]"
+                        [connect]="[true, false]" [(ngModel)]="props.lineHeight"
+                        (ngModelChange)="setLineHeight()"></nouislider>
           </div>
         </div>
 
         <div class="custom-item" *ngIf="selected && textEditor">
           <div class="custom-item-title">Zeichenabstand</div>
           <div class="custom-item-body">
-            <nouislider [config]="sliderConfig" [min]="-200" [max]="800" [step]="10" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.charSpacing" (ngModelChange)="setCharSpacing()"></nouislider>
+            <nouislider [config]="sliderConfig" [min]="-200" [max]="800" [step]="10" [tooltips]="[true]"
+                        [connect]="[true, false]" [(ngModel)]="props.charSpacing"
+                        (ngModelChange)="setCharSpacing()"></nouislider>
           </div>
         </div>
 
@@ -376,13 +403,18 @@
         <div class="custom-item" *ngIf="selected">
           <div class="custom-item-title">Rotation</div>
           <div class="custom-item-body">
-            <nouislider [config]="{pips: {mode: 'range', values: [0, 45, 90, 135, 180, 225, 270, 315, 360], density: 8, stepped: true}}" [min]="0" [max]="360" [step]="1" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.angle" (ngModelChange)="setAngle()"></nouislider>
+            <nouislider
+                [config]="{pips: {mode: 'range', values: [0, 45, 90, 135, 180, 225, 270, 315, 360], density: 8, stepped: true}}"
+                [min]="0" [max]="360" [step]="1" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.angle"
+                (ngModelChange)="setAngle()"></nouislider>
           </div>
         </div>
         <div class="custom-item" *ngIf="selected">
           <div class="custom-item-title">Skalierung</div>
           <div class="custom-item-body">
-            <nouislider [config]="sliderConfig" [min]="0.1" [max]="3" [step]="0.1" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.scale" (ngModelChange)="setActiveScale(props.scale)"></nouislider>
+            <nouislider [config]="sliderConfig" [min]="0.1" [max]="3" [step]="0.1" [tooltips]="[true]"
+                        [connect]="[true, false]" [(ngModel)]="props.scale"
+                        (ngModelChange)="setActiveScale(props.scale)"></nouislider>
           </div>
         </div>
 
@@ -399,11 +431,11 @@
           <div class="custom-item-title">Höhe / Breite</div>
           <div class="custom-item-body">
             <div class="form-group">
-            <select id="dimension-preset" class="form-control" [(ngModel)]="selectedSize"
-                    (ngModelChange)="changeToPreset($event)">
-              <option value="null">Vorgaben</option>
-              <option *ngFor="let s of sizes" [ngValue]="s">{{s.width}}x{{s.height}}</option>
-            </select>
+              <select id="dimension-preset" class="form-control" [(ngModel)]="selectedSize"
+                      (ngModelChange)="changeToPreset($event)">
+                <option value="null">Vorgaben</option>
+                <option *ngFor="let s of sizes" [ngValue]="s">{{s.width}}x{{s.height}}</option>
+              </select>
             </div>
             <div class="row">
               <div class="col-md-6">

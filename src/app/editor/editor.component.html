@@ -1,0 +1,397 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="input-group input-group-lg input-group-title">
+      <input type="text" class="form-control" placeholder="Geben Sie einen Titel für Ihr neues Design an"
+             [(ngModel)]="projectName"/>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <div class="row">
+      <div class="col-lg-12 text-right">
+        <button data-toggle="tooltip" data-placement="bottom" title="Als Bild speichern" type="button"
+                class="btn btn-default" (click)="rasterize();"><i class="fa fa-download" aria-hidden="true"></i> Bild
+        </button>
+        <button data-toggle="tooltip" data-placement="bottom" title="Als SVG speichern" type="button"
+                class="btn btn-default" (click)="rasterizeSVG();"><i class="fa fa-download" aria-hidden="true"></i> SVG
+        </button>
+        <button data-toggle="tooltip" data-placement="bottom" title="Schnellspeichern" type="button"
+                class="btn btn-default" (click)="saveCanvasToJSON();"><i class="fa fa-save" aria-hidden="true"></i>
+          Schnellspeichern
+        </button>
+        <button data-toggle="tooltip" data-placement="bottom" title="Schnellladen" type="button" class="btn btn-default"
+                (click)="loadCanvasFromJSON();"><i class="fa fa-save" aria-hidden="true"></i> Schnellladen
+        </button>
+        <button data-toggle="tooltip" data-placement="bottom" title="Alles löschen" type="button"
+                class="btn btn-default" (click)="confirmClear();"><i class="fa fa-ban" aria-hidden="true"></i> Löschen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr/>
+
+<div class="row">
+  <!-- Sidebar: Left -->
+  <div class="col-lg-2 col-md-3">
+
+    <!-- Panel: Text -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Text hinzufügen</div>
+      <div class="panel-body">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Hallo Welt!" [(ngModel)]="textString"/>
+          <span class="input-group-btn">
+            <button id="add-text" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                    [disabled]="textString == ''"
+                    title="Text hinzufügen" (click)="addText()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- /Panel: Text -->
+
+    <!-- Panel: Library -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Hersteller-Logos</div>
+      <div class="panel-body max-height">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Audi" src="assets/libraries/brands/audi-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="BMW" src="assets/libraries/brands/bmw-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Citroen" src="assets/libraries/brands/citroen-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Fiat" src="assets/libraries/brands/fiat-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Ford" src="assets/libraries/brands/ford-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="General Motors" src="assets/libraries/brands/generalmotors-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Honda" src="assets/libraries/brands/honda-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Hyundai" src="assets/libraries/brands/hyundai-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Infiniti" src="assets/libraries/brands/infiniti-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Kia" src="assets/libraries/brands/kia-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Lexus" src="assets/libraries/brands/lexus-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Mazda" src="assets/libraries/brands/mazda-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Mercedes-Benz" src="assets/libraries/brands/mercedesbenz-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Mini" src="assets/libraries/brands/mini-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Nissan" src="assets/libraries/brands/nissan-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Peugeot" src="assets/libraries/brands/peugeot-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Porsche" src="assets/libraries/brands/porsche-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Renault" src="assets/libraries/brands/renault-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Seat" src="assets/libraries/brands/seat-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Skoda" src="assets/libraries/brands/skoda-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Tesla" src="assets/libraries/brands/tesla-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Toyota" src="assets/libraries/brands/toyota-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Volkswagen" src="assets/libraries/brands/volkswagen-sd.png">
+        <img class="images-item" (click)="getImgPolaroid($event)" title="Volvo" src="assets/libraries/brands/volvo-sd.png">
+      </div>
+    </div>
+    <!-- /Panel: Library -->
+
+    <!-- Panel: Image Upload -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Eigenes Bild hochladen</div>
+      <div class="panel-body text-center">
+        <img id="testImage" *ngIf="url" class="images-item-upload" [src]="url" (click)="addImageOnCanvas(url);"/>
+        <label class="btn btn-default btn-block file-container">
+          <i class="fa fa-upload"></i> Datei auswählen
+          <input type='file' (change)="readUrl($event);">
+        </label>
+        <br/>
+        <div class="btn-group btn-group-justified" role="group" aria-label="Eigenes Bild entfernen" *ngIf="url">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default btn-sm" (click)="removeWhite(url);">
+              <i class="fa fa-times" aria-hidden="true"></i> Entfernen
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Panel: Image Upload -->
+
+    <!-- Panel: Form-Elements -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Form-Elemente</div>
+      <div class="panel-body text-center max-height">
+        <div class="btn-group btn-group-lg" role="group" aria-label="Form-Elemente">
+          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Rechteck"
+                  (click)="addShape('rectangle');">&#9646;</button>
+          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Quadrat"
+                  (click)="addShape('square');">&#9724;</button>
+          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Dreieck"
+                  (click)="addShape('triangle');">&#9650;</button>
+          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Kreis"
+                  (click)="addShape('circle');"><i class="fa fa-circle"></i></button>
+          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Stern"
+                  (click)="addShape('star');"><i class="fa fa-star"></i></button>
+        </div>
+      </div>
+    </div>
+    <!-- /Panel: Form-Elements -->
+
+  </div>
+  <!-- /Sidebar: Left -->
+
+  <!-- Canvas -->
+  <div class="col-lg-8 col-md-6">
+    <canvas id="canvas"></canvas>
+  </div>
+  <!-- /Canvas -->
+
+  <!-- Sidebar: Right -->
+  <div class="col-lg-2 col-md-3">
+
+    <!-- Panel: Options -->
+    <div class="panel panel-default" [ngClass]="{'panel-disabled': !selected}">
+      <div class="panel-heading">Optionen</div>
+      <div class="panel-body text-center">
+        <div class="btn-group" role="group" aria-label="...">
+          <button data-toggle="tooltip" data-placement="bottom" title="Element löschen" type="button"
+                  class="btn btn-danger" [disabled]="!selected" (click)="removeSelected();"><i class="fa fa-trash"
+                                                                                               aria-hidden="true"></i>
+          </button>
+          <button data-toggle="tooltip" data-placement="bottom" title="In den Hintergrund" type="button"
+                  class="btn btn-default" [disabled]="!selected" (click)="sendToBack();"><i class="fa fa-level-down"
+                                                                                            aria-hidden="true"></i>
+          </button>
+          <button data-toggle="tooltip" data-placement="bottom" title="In den Vordergrund" type="button"
+                  class="btn btn-default" [disabled]="!selected" (click)="bringToFront();"><i class="fa fa-level-up"
+                                                                                              aria-hidden="true"></i>
+          </button>
+          <button data-toggle="tooltip" data-placement="bottom" title="Duplizieren" type="button"
+                  class="btn btn-default" [disabled]="!selected || selected.type == 'group'" (click)="clone();"><i
+              class="fa fa-clone" aria-hidden="true"></i></button>
+          <button data-toggle="tooltip" data-placement="bottom" title="Abwählen" type="button" class="btn btn-default"
+                  [disabled]="!selected" (click)="cleanSelect()"><i class="fa fa-remove" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /Panel: Options -->
+
+    <!-- Panel: Layers -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Ebenen</div>
+      <div class="panel-body layer-list max-height">
+        <ul class="list-group" dnd-sortable-container [sortableData]="layers">
+          <li *ngFor="let item of layers; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i"
+              (click)="selectLayer(item)" [ngClass]="{'active': item.active}">
+            <i class="fa fa-fw fa-ellipsis-v text-muted"></i> <i class="fa fa-fw {{elementTypes[item.type].icon}} text-muted"></i>
+            {{item.title}}
+          </li>
+          <li class="list-group-item disabled"><i class="fa fa-fw fa-ellipsis-v text-muted"></i> Hintergrund</li>
+        </ul>
+      </div>
+    </div>
+    <!-- /Panel: Layers -->
+
+    <!-- Panel: Element Settings -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Element-Einstellungen</div>
+      <div class="panel-body">
+
+        <div class="custom-item" *ngIf="selected  && selected.type == 'group'">
+          Aktive Gruppe
+        </div>
+
+        <div class="custom-item" *ngIf="!selected">
+          <i class="fa fa-crosshairs" aria-hidden="true"></i> Kein Element ausgewählt
+        </div>
+
+        <div class="custom-item" *ngIf="selected && selected.type != 'group'">
+          <div class="custom-item-title">ID</div>
+          <div class="custom-item-body">
+            <input type="text" class="form-control" readonly [(ngModel)]="props.id" (keyup)="setId()"/>
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="selected && selected.type != 'group'">
+          <div class="custom-item-title">Transparenz</div>
+          <div class="custom-item-body">
+            <input type="range" [(ngModel)]="props.opacity" (change)="setOpacity()"/> {{props.opacity}}
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="selected && textEditor || selected && figureEditor">
+          <div class="custom-item-title">Füllfarbe</div>
+          <div class="custom-item-body">
+            <input type="text" class="form-control" [cpPosition]="'bottom'" [(colorPicker)]="props.fill"
+                   [style.background]="props.fill" [value]="props.fill" (colorPickerChange)="setFill()"/>
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="selected && textEditor">
+          <div class="custom-item-title">Schriftart</div>
+          <div class="custom-item-body">
+            <select [(ngModel)]="props.fontFamily" class="form-control" (change)="setFontFamily()">
+              <option value="arial">Arial</option>
+              <option value="helvetica" selected>Helvetica</option>
+              <option value="verdana">Verdana</option>
+              <option value="courier">Courier</option>
+              <option value="Roboto">Roboto</option>
+              <option value="Open Sans">Open Sans</option>
+              <option value="Zilla Slab">Zilla Slab</option>
+              <option value="Lato">Lato</option>
+              <option value="Bellefair">Bellefair</option>
+              <option value="Fresca">Fresca</option>
+              <option value="Raleway">Raleway</option>
+              <option value="Open Sans Condensed">Open Sans Condensed</option>
+              <option value="Indie Flower">Indie Flower</option>
+              <option value="Josefin Sans">Josefin Sans</option>
+              <option value="Inconsolata">Inconsolata</option>
+              <option value="Pacifico">Pacifico</option>
+              <option value="Gloria Hallelujah">Gloria Hallelujah</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="selected && textEditor">
+          <div class="custom-item-title">Textausrichtung</div>
+          <div class="custom-item-body text-center">
+            <div class="btn-group" role="group" aria-label="...">
+              <button type="button" class="btn btn-default" [ngClass]="{'active': props.textAlign == 'left' }"
+                      (click)="setTextAlign('left')">
+                <i class="fa fa-align-left"></i>
+              </button>
+              <button type="button" class="btn btn-default" [ngClass]="{'active': props.textAlign == 'center' }"
+                      (click)="setTextAlign('center')">
+                <i class="fa fa-align-center"></i>
+              </button>
+              <button type="button" class="btn btn-default" [ngClass]="{'active': props.textAlign == 'right' }"
+                      (click)="setTextAlign('right')">
+                <i class="fa fa-align-right"></i>
+              </button>
+              <button type="button" class="btn btn-default" [ngClass]="{'active': props.textAlign == 'justify' }"
+                      (click)="setTextAlign('justify')">
+                <i class="fa fa-align-justify"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="selected && textEditor">
+          <div class="custom-item-title">Stil</div>
+          <div class="custom-item-body text-center">
+            <div class="btn-group" role="group" aria-label="...">
+              <button type="button" class="btn btn-default btn-sm" [ngClass]="{'active': props.fontWeight }"
+                      (click)="setBold()">
+                <i class="fa fa-bold"></i>
+              </button>
+              <button type="button" class="btn btn-default btn-sm" [ngClass]="{'active': props.fontStyle }"
+                      (click)="setFontStyle()">
+                <i class="fa fa-italic"></i>
+              </button>
+              <button type="button" class="btn btn-default btn-sm"
+                      [ngClass]="{'active': hasTextDecoration('underline') }" (click)="setTextDecoration('underline')">
+                <i class="fa fa-underline"></i>
+              </button>
+              <button type="button" class="btn btn-default btn-sm"
+                      [ngClass]="{'active': hasTextDecoration('overline') }" (click)="setTextDecoration('overline')">
+                <i class="fa fa-underline fa-flip-vertical"></i>
+              </button>
+              <button type="button" class="btn btn-default btn-sm"
+                      [ngClass]="{'active': hasTextDecoration('line-through') }"
+                      (click)="setTextDecoration('line-through')">
+                <i class="fa fa-strikethrough"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="selected && textEditor">
+          <div class="custom-item-title">Schriftgröße</div>
+          <div class="custom-item-body">
+            <input type="range" [(ngModel)]="props.fontSize" (change)="setFontSize()" step="1" min="1" max="120"/>
+            {{props.fontSize}}
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="selected && textEditor">
+          <div class="custom-item-title">Zeilenabstand</div>
+          <div class="custom-item-body">
+            <input type="range" [(ngModel)]="props.lineHeight" (change)="setLineHeight()" step="0.1" min="0" max="10"/>
+            {{props.lineHeight}}
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="selected && textEditor">
+          <div class="custom-item-title">Zeichenabstand</div>
+          <div class="custom-item-body">
+            <input type="range" [(ngModel)]="props.charSpacing" (change)="setCharSpacing()" step="10" min="-200"
+                   max="800"/> {{props.charSpacing}}
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- /Panel: Element Settings -->
+
+    <!-- Panel: Canvas Settings -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Bühne</div>
+      <div class="panel-body">
+
+        <div class="custom-item">
+          <div class="custom-item-title">Höhe / Breite</div>
+          <div class="custom-item-body">
+            <select id="dimension-preset" class="form-control" [(ngModel)]="selectedSize"
+                    (ngModelChange)="changeToPreset($event)">
+              <option value="null">Vorgaben</option>
+              <option *ngFor="let s of sizes" [ngValue]="s">{{s.width}}x{{s.height}}</option>
+            </select>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="number" class="form-control" [(ngModel)]="size.width" (keyup)="changeSize()"/>
+                  <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-arrows-h"
+                                                                        aria-hidden="true"></i></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="number" class="form-control" [(ngModel)]="size.height" (keyup)="changeSize()"/>
+                  <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-arrows-v"
+                                                                        aria-hidden="true"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-item" *ngIf="!props.canvasImage">
+          <div class="custom-item-title">Hintergrundfarbe</div>
+          <div class="custom-item-body">
+            <input type="text" class="form-control" [cpPosition]="'bottom'" [(colorPicker)]="props.canvasFill"
+                   [style.background]="props.canvasFill" [value]="props.canvasFill"
+                   (colorPickerChange)="setCanvasFill()"/>
+          </div>
+        </div>
+        <div class="custom-item">
+          <div class="custom-item-title">Hintergrundbild (url)</div>
+          <div class="custom-item-body">
+            <input type="text" class="form-control" placeholder="http://placeholder.com/350x150"
+                   [(ngModel)]="props.canvasImage"
+                   (keyup)="setCanvasImage()"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Panel: Canvas Settings -->
+  </div>
+  <!-- /Sidebar: Right -->
+</div>
+
+<hr/>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <button type="button" class="btn btn-default btn-sm" (click)='rasterizeJSON()'>
+          <i class="fa fa-refresh" aria-hidden="true"></i> Als JSON exportieren
+        </button>
+      </div>
+      <div class="panel-body">
+        <pre>{{json}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<br/>

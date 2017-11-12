@@ -5,6 +5,7 @@ import { MainContentComponent } from './shell/main-content/main-content.componen
 import { TopBarComponent } from './shell/top-bar/top-bar.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    NgbModule
   ],
   declarations: [
     ShellComponent,

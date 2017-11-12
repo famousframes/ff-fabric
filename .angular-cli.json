@@ -19,6 +19,8 @@
     "prefix": "app",
     "styles": [
       "../node_modules/font-awesome/css/font-awesome.css",
+      "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "../node_modules/nouislider/distribute/nouislider.css",
       "styles.css"
     ],
     "scripts": [],

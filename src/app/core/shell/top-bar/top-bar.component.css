@@ -1,3 +1,8 @@
+nav.navbar {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 nav.navbar-default {
     background-color: #2E3840;
     -webkit-box-shadow: 0 1px 2px rgba(68, 129, 166, 0.5);

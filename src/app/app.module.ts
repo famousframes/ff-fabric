@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from 'app/core/core.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShellComponent } from 'app/core/shell/shell.component';
 
 
@@ -12,7 +13,8 @@ import { ShellComponent } from 'app/core/shell/shell.component';
     BrowserModule,
     FormsModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [

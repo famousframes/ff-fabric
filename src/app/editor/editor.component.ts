@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ColorPickerService } from 'ngx-color-picker';
+import { Font } from 'ngx-font-picker';
 
 import 'fabric';
 declare const fabric: any;
@@ -27,6 +28,15 @@ export class EditorComponent implements OnInit {
     SHIFT: 50
   };
 
+  public presetFonts = ['Arial', 'Serif', 'Helvetica', 'Sans-Serif', 'Open Sans', 'Roboto Slab'];
+
+  public font: Font = new Font({
+    family: 'Roboto',
+    size: '14px',
+    style: 'regular',
+    styles: ['regular']
+  });
+
   private props: any = {
     canvasFill: '#ffffff',
     canvasImage: '',
@@ -41,7 +51,7 @@ export class EditorComponent implements OnInit {
     fontWeight: null,
     fontStyle: null,
     textAlign: null,
-    fontFamily: null,
+    fontFamily: 'Open Sans',
     TextDecoration: '',
     scale: 1,
     angle: 0
@@ -67,6 +77,13 @@ export class EditorComponent implements OnInit {
     {width: 1024, height: 768},
     {width: 1920, height: 1080}
   ];
+
+  public sliderConfig: any = {
+    pips: {
+      mode: 'range',
+      density: 5
+    }
+  };
 
   private json: any;
   private globalEditor: boolean = false;
@@ -108,6 +125,8 @@ export class EditorComponent implements OnInit {
       'object:moving': (e) => {
       },
       'object:modified': (e) => {
+        this.getAngle();
+        this.getScale();
       },
       'object:selected': (e) => {
 
@@ -351,7 +370,6 @@ export class EditorComponent implements OnInit {
    */
   readUrl(event) {
     if (event.target.files && event.target.files[0]) {
-      console.info(event.target.files[0]);
       this.urlName = event.target.files[0].name;
       let reader = new FileReader();
       reader.onload = (event) => {
@@ -604,7 +622,7 @@ export class EditorComponent implements OnInit {
   setId() {
     let val = this.props.id;
     let complete = this.canvas.getActiveObject().toObject();
-    console.log(complete);
+    // console.log(complete);
     this.canvas.getActiveObject().toObject = () => {
       complete.id = val;
       return complete;
@@ -693,6 +711,12 @@ export class EditorComponent implements OnInit {
     this.setActiveStyle('fontStyle', this.props.fontStyle ? 'italic' : '', null);
   }
 
+  setWebfont() {
+    this.props.fontSize = this.font.size;
+    this.setActiveStyle('fontSize', parseInt(this.props.fontSize), null);
+    this.props.fontFamily = this.font.family;
+    this.setActiveProp('fontFamily', this.props.fontFamily);
+  }
 
   getTextDecoration() {
     this.props.TextDecoration = this.getActiveStyle('textDecoration', null);
@@ -756,7 +780,6 @@ export class EditorComponent implements OnInit {
 
     if (activeObject) {
       this.canvas.remove(activeObject);
-      // this.textString = '';
     }
     else if (activeGroup) {
       let objectsInGroup = activeGroup.getObjects();
@@ -772,7 +795,7 @@ export class EditorComponent implements OnInit {
 
   /**
    * Send active object to front
-   * TODO: Extend for layer management
+   *
    */
   bringToFront() {
     let activeObject = this.canvas.getActiveObject(),
@@ -793,7 +816,7 @@ export class EditorComponent implements OnInit {
 
   /**
    * Send active object to back
-   * TODO: Extend for layer management
+   *
    */
   sendToBack() {
     let activeObject = this.canvas.getActiveObject(),

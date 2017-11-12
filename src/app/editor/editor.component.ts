@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ColorPickerService } from 'ngx-color-picker';
-import { Font } from 'ngx-font-picker';
+import {Component, OnInit} from '@angular/core';
+import {ColorPickerService} from 'ngx-color-picker';
+import {Font} from 'ngx-font-picker';
 
 import 'fabric';
 declare const fabric: any;
@@ -142,7 +142,7 @@ export class EditorComponent implements OnInit {
     // register keyboard events
     fabric.util.addListener(document.body, 'keydown', (opt) => {
       // do not invoke keyboard events on input fields
-      if(opt.target.tagName === 'INPUT') return;
+      if (opt.target.tagName === 'INPUT') return;
       // if(opt.repeat) return; // prevent repeating (keyhold)
 
       let key = opt.which || opt.keyCode;
@@ -155,8 +155,6 @@ export class EditorComponent implements OnInit {
       'object:moving': (e) => {
       },
       'object:modified': (e) => {
-        this.getAngle();
-        this.getScale();
       },
       'object:selected': (e) => {
 
@@ -172,8 +170,6 @@ export class EditorComponent implements OnInit {
 
           this.getId();
           this.getOpacity();
-          this.getAngle();
-          this.getScale();
           this.getTitle();
 
           switch (selectedObject.type) {
@@ -229,13 +225,31 @@ export class EditorComponent implements OnInit {
    * @param event
    */
   handleKeyPress(key, event) {
-    switch(key) {
-      case 37: this.moveSelectedObject(this.Direction.LEFT, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR); event.preventDefault(); break;
-      case 38: this.moveSelectedObject(this.Direction.UP, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR); event.preventDefault(); break;
-      case 39: this.moveSelectedObject(this.Direction.RIGHT, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR); event.preventDefault(); break;
-      case 40: this.moveSelectedObject(this.Direction.DOWN, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR); event.preventDefault(); break;
-      case 46: this.removeSelected(); event.preventDefault(); break;
-      case 65: event.ctrlKey ? this.selectAllObjects() : void(0); event.preventDefault(); break;
+    switch (key) {
+      case 37:
+        this.moveSelectedObject(this.Direction.LEFT, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR);
+        event.preventDefault();
+        break;
+      case 38:
+        this.moveSelectedObject(this.Direction.UP, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR);
+        event.preventDefault();
+        break;
+      case 39:
+        this.moveSelectedObject(this.Direction.RIGHT, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR);
+        event.preventDefault();
+        break;
+      case 40:
+        this.moveSelectedObject(this.Direction.DOWN, event.shiftKey ? this.DirectionSteps.SHIFT : this.DirectionSteps.REGULAR);
+        event.preventDefault();
+        break;
+      case 46:
+        this.removeSelected();
+        event.preventDefault();
+        break;
+      case 65:
+        event.ctrlKey ? this.selectAllObjects() : void(0);
+        event.preventDefault();
+        break;
     }
   }
 
@@ -244,7 +258,7 @@ export class EditorComponent implements OnInit {
    *
    */
   selectAllObjects() {
-    let objs = this.canvas.getObjects().map(function(o) {
+    let objs = this.canvas.getObjects().map(function (o) {
       return o.set('active', true);
     });
 
@@ -267,12 +281,20 @@ export class EditorComponent implements OnInit {
     let activeGroup = this.canvas.getActiveGroup();
     let activeObject = this.canvas.getActiveObject();
 
-    if(activeObject) {
+    if (activeObject) {
       switch (direction) {
-        case this.Direction.LEFT: activeObject.setLeft(activeObject.getLeft() - value); break;
-        case this.Direction.UP: activeObject.setTop(activeObject.getTop() - value); break;
-        case this.Direction.RIGHT: activeObject.setLeft(activeObject.getLeft() + value); break;
-        case this.Direction.DOWN: activeObject.setTop(activeObject.getTop() + value); break;
+        case this.Direction.LEFT:
+          activeObject.setLeft(activeObject.getLeft() - value);
+          break;
+        case this.Direction.UP:
+          activeObject.setTop(activeObject.getTop() - value);
+          break;
+        case this.Direction.RIGHT:
+          activeObject.setLeft(activeObject.getLeft() + value);
+          break;
+        case this.Direction.DOWN:
+          activeObject.setTop(activeObject.getTop() + value);
+          break;
       }
 
       activeObject.setCoords();
@@ -280,10 +302,18 @@ export class EditorComponent implements OnInit {
     }
     else if (activeGroup) {
       switch (direction) {
-        case this.Direction.LEFT: activeGroup.setLeft(activeGroup.getLeft() - value); break;
-        case this.Direction.UP: activeGroup.setTop(activeGroup.getTop() - value); break;
-        case this.Direction.RIGHT: activeGroup.setLeft(activeGroup.getLeft() + value); break;
-        case this.Direction.DOWN: activeGroup.setTop(activeGroup.getTop() + value); break;
+        case this.Direction.LEFT:
+          activeGroup.setLeft(activeGroup.getLeft() - value);
+          break;
+        case this.Direction.UP:
+          activeGroup.setTop(activeGroup.getTop() - value);
+          break;
+        case this.Direction.RIGHT:
+          activeGroup.setLeft(activeGroup.getLeft() + value);
+          break;
+        case this.Direction.DOWN:
+          activeGroup.setTop(activeGroup.getTop() + value);
+          break;
       }
 
       activeGroup.setCoords();
@@ -301,7 +331,7 @@ export class EditorComponent implements OnInit {
 
   /**
    * Set layer as active one
-   * 
+   *
    * @param layer
    */
   selectLayer(layer: any) {
@@ -341,7 +371,7 @@ export class EditorComponent implements OnInit {
 
   /**
    * Size - set canvas dimensions
-   * 
+   *
    * @param event
    */
   changeSize(event: any) {
@@ -351,7 +381,7 @@ export class EditorComponent implements OnInit {
 
   /**
    * Size - apply preset to canvas
-   * 
+   *
    * @param event
    */
   changeToPreset(event: any) {
@@ -362,7 +392,7 @@ export class EditorComponent implements OnInit {
 
   /**
    * Text - add text element
-   * 
+   *
    */
   addText() {
     let textString = this.textString;
@@ -388,7 +418,7 @@ export class EditorComponent implements OnInit {
 
   /**
    * Image - Add a dom image to canvas
-   * 
+   *
    * @param event
    */
   getImgPolaroid(event: any) {
@@ -401,7 +431,8 @@ export class EditorComponent implements OnInit {
         padding: 10,
         cornersize: 10,
         hasRotatingPoint: true,
-        title: el.title
+        title: el.title,
+        lockUniScaling: true
       });
       image.scaleToWidth(150);
       image.scaleToHeight(150);
@@ -599,7 +630,6 @@ export class EditorComponent implements OnInit {
   }
 
 
-
   // ELEMENTS //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   /**
@@ -666,18 +696,6 @@ export class EditorComponent implements OnInit {
     let object = this.canvas.getActiveObject();
     if (!object) return;
     object.set(name, value).setCoords();
-    this.canvas.renderAll();
-  }
-
-  /**
-   * Set scale for active object
-   *
-   * @param value
-   */
-  setActiveScale(value) {
-    let object = this.canvas.getActiveObject();
-    if (!object) return;
-    object.scale(parseFloat(value)).setCoords();
     this.canvas.renderAll();
   }
 
@@ -861,19 +879,6 @@ export class EditorComponent implements OnInit {
   setFontFamily() {
     this.setActiveProp('fontFamily', this.props.fontFamily);
   }
-
-  getAngle() {
-    this.props.angle = this.getActiveProp('angle') === '' ? 0 : this.getActiveProp('angle');
-  }
-
-  setAngle() {
-    this.setActiveProp('angle', parseInt(this.props.angle));
-  }
-
-  getScale() {
-    this.props.scale = parseFloat(this.getActiveProp('scaleX'));
-  }
-
 
   // SYSTEM ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

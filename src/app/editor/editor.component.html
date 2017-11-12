@@ -364,25 +364,6 @@
           </div>
         </div>
 
-        <!-- Transforms -->
-        <div class="custom-item" *ngIf="selected">
-          <div class="custom-item-title">Rotation</div>
-          <div class="custom-item-body">
-            <nouislider
-                [config]="{pips: {mode: 'range', values: [0, 45, 90, 135, 180, 225, 270, 315, 360], density: 8, stepped: true}}"
-                [min]="0" [max]="360" [step]="1" [tooltips]="[true]" [connect]="[true, false]" [(ngModel)]="props.angle"
-                (ngModelChange)="setAngle()"></nouislider>
-          </div>
-        </div>
-        <div class="custom-item" *ngIf="selected">
-          <div class="custom-item-title">Skalierung</div>
-          <div class="custom-item-body">
-            <nouislider [config]="sliderConfig" [min]="0.1" [max]="3" [step]="0.1" [tooltips]="[true]"
-                        [connect]="[true, false]" [(ngModel)]="props.scale"
-                        (ngModelChange)="setActiveScale(props.scale)"></nouislider>
-          </div>
-        </div>
-
       </div>
     </div>
     <!-- /Panel: Element Settings -->

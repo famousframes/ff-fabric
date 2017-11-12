@@ -24,7 +24,6 @@ div.font-select {
     filter: grayscale(100%);
 }
 
-
 .images-item:hover {
     -webkit-filter: none; /* Safari 6.0 - 9.0 */
     filter: none;
@@ -50,14 +49,15 @@ div.font-select {
     margin-right: -15px;
     padding: 10px 15px;
 }
+
 .custom-item:first-child {
     padding-top: 0;
     border-top: 0;
 }
+
 .custom-item:last-child {
     padding-bottom: 0;
 }
-
 
 .custom-item .custom-item-title {
     color: #666666;
@@ -68,6 +68,7 @@ div.font-select {
     padding: 10px 0;
     margin-bottom: 15px;
 }
+
 .custom-item .custom-item-body .form-control {
     padding: 0;
 }
@@ -133,11 +134,13 @@ div.font-select {
 .layer-list .list-group-item {
     padding: 5px 10px 5px 5px;
 }
+
 .layer-list .list-group-item.active {
     color: #666;
     border-color: #bbb;
     background-color: #ccc;
 }
+
 .layer-list .list-group-item.active .layer-title {
     font-weight: 600;
 }
@@ -145,9 +148,11 @@ div.font-select {
 .layer-list .layer-visibility-toggle {
     cursor: pointer;
 }
+
 .layer-list .layer-visibility-toggle i.fa-eye-slash {
     opacity: .5;
 }
+
 .list-group-item:first-child {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
@@ -160,4 +165,30 @@ div.font-select {
 
 .btn-group.btn-group-disabled {
     opacity: .4;
+}
+
+.dnd-drag-start {
+    -moz-transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    opacity: 0.7;
+    border: 1px dashed #000;
+}
+
+.dnd-drag-enter {
+    opacity: 0.7;
+    border: 1px dashed #000;
+}
+
+.dnd-drag-over {
+    border: 1px dashed #000;
+}
+
+.dnd-sortable-drag {
+    -moz-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    opacity: 0.7;
+    border: 1px dashed #000;
+    margin: 5px 0;
 }

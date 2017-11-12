@@ -33,6 +33,8 @@ export class EditorComponent implements OnInit {
     id: null,
     opacity: null,
     fill: null,
+    stroke: null,
+    strokeWidth: null,
     fontSize: null,
     lineHeight: null,
     charSpacing: null,
@@ -82,17 +84,19 @@ export class EditorComponent implements OnInit {
    *
    */
   ngOnInit() {
-    // setup front side canvas
+    // setup canvas
     this.canvas = new fabric.Canvas('canvas', {
       hoverCursor: 'pointer',
       selection: true,
-      selectionBorderColor: 'blue'
+      selectionBorderColor: 'blue',
+      preserveObjectStacking: true
     });
 
     // register keyboard events
     fabric.util.addListener(document.body, 'keydown', (opt) => {
-      // console.info(opt);
-      // if(opt.repeat) return;
+      // do not invoke keyboard events on input fields
+      if(opt.target.tagName === 'INPUT') return;
+      // if(opt.repeat) return; // prevent repeating (keyhold)
 
       let key = opt.which || opt.keyCode;
 
@@ -119,6 +123,9 @@ export class EditorComponent implements OnInit {
 
           this.getId();
           this.getOpacity();
+          this.getAngle();
+          this.getScale();
+          this.getTitle();
 
           switch (selectedObject.type) {
             case 'polygon':
@@ -127,6 +134,8 @@ export class EditorComponent implements OnInit {
             case 'triangle':
               this.shapeEditor = true;
               this.getFill();
+              this.getStroke();
+              this.getStrokeWidth();
               break;
             case 'i-text':
               this.textEditor = true;
@@ -134,7 +143,10 @@ export class EditorComponent implements OnInit {
               this.getCharSpacing();
               this.getBold();
               this.getFontStyle();
+              this.getFontSize();
               this.getFill();
+              this.getStroke();
+              this.getStrokeWidth();
               this.getTextDecoration();
               this.getTextAlign();
               this.getFontFamily();
@@ -224,14 +236,9 @@ export class EditorComponent implements OnInit {
   }
 
   updateLayerSort() {
-    console.info('Updating sort...', this.layers);
-    let numLayers = this.layers.length;
-
     this.layers.forEach((layer, ind) => {
-      console.info(layer, ind);
       this.canvas.moveTo(layer, ind);
     })
-
   }
 
   /*------------------------Block elements------------------------*/
@@ -269,8 +276,8 @@ export class EditorComponent implements OnInit {
       fontFamily: 'Arial',
       angle: 0,
       fill: '#000000',
-      scaleX: 0.5,
-      scaleY: 0.5,
+      scaleX: 1,
+      scaleY: 1,
       fontWeight: '',
       hasRotatingPoint: true,
       title: textString
@@ -298,7 +305,6 @@ export class EditorComponent implements OnInit {
         padding: 10,
         cornersize: 10,
         hasRotatingPoint: true,
-        peloas: 12,
         title: el.title
       });
       image.scaleToWidth(150);
@@ -582,7 +588,7 @@ export class EditorComponent implements OnInit {
           break;
       }
       if (clone) {
-        clone.set({left: 10, top: 10});
+        clone.set({left: 10, top: 10, title: 'Kopie von ' + activeObject.title});
         this.canvas.add(clone);
         this.selectItemAfterAdded(clone);
       }
@@ -605,6 +611,14 @@ export class EditorComponent implements OnInit {
     };
   }
 
+  getTitle() {
+    this.props.title = this.getActiveProp('title');
+  }
+
+  setTitle() {
+    this.setActiveProp('title', this.props.title);
+  }
+
   getOpacity() {
     this.props.opacity = this.getActiveStyle('opacity', null) * 100;
   }
@@ -619,6 +633,22 @@ export class EditorComponent implements OnInit {
 
   setFill() {
     this.setActiveStyle('fill', this.props.fill, null);
+  }
+
+  getStroke() {
+    this.props.stroke = this.getActiveStyle('stroke', null);
+  }
+
+  setStroke() {
+    this.setActiveStyle('stroke', this.props.stroke, null);
+  }
+
+  getStrokeWidth() {
+    this.props.strokeWidth = this.getActiveStyle('strokeWidth', null);
+  }
+
+  setStrokeWidth() {
+    this.setActiveStyle('strokeWidth', this.props.strokeWidth, null);
   }
 
   getLineHeight() {
@@ -701,8 +731,16 @@ export class EditorComponent implements OnInit {
     this.setActiveProp('fontFamily', this.props.fontFamily);
   }
 
+  getAngle() {
+    this.props.angle = this.getActiveProp('angle') === '' ? 0 : this.getActiveProp('angle');
+  }
+
   setAngle() {
     this.setActiveProp('angle', parseInt(this.props.angle));
+  }
+
+  getScale() {
+    this.props.scale = parseFloat(this.getActiveProp('scaleX'));
   }
 
 
@@ -793,7 +831,9 @@ export class EditorComponent implements OnInit {
       alert('Ihr Browser unterstützt diese Funktion nicht.');
     }
     else {
-      window.open(this.canvas.toDataURL('png'));
+      // chrome workaround: https://stackoverflow.com/a/45700813
+      let _w = window.open();
+      _w.document.write('<iframe src="' + this.canvas.toDataURL('png') + '" frameborder="0" style="border:0; top:0; left:0; bottom:0; right:0; width:100%; height:100%;" allowfullscreen></iframe>');
     }
   }
 
@@ -802,7 +842,9 @@ export class EditorComponent implements OnInit {
    *
    */
   rasterizeSVG() {
-    window.open('data:image/svg+xml;utf8,' + encodeURIComponent(this.canvas.toSVG()));
+    // chrome workaround: https://stackoverflow.com/a/45700813
+    let _w = window.open();
+    _w.document.write('<iframe src="data:image/svg+xml;utf8,' + encodeURIComponent(this.canvas.toSVG()) + '" frameborder="0" style="border:0; top:0; left:0; bottom:0; right:0; width:100%; height:100%;" allowfullscreen></iframe>');
   };
 
 

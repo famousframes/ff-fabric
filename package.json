@@ -1,6 +1,6 @@
 {
   "name": "ff-fabric",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Yet another editor based on FabricJS and Angular",
   "license": "MIT",
   "scripts": {
@@ -59,9 +59,9 @@
     "karma": "~1.4.1",
     "karma-chrome-launcher": "~2.0.0",
     "karma-cli": "~1.0.1",
+    "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",

@@ -136,13 +136,34 @@
   <!-- Sidebar: Right -->
   <div class="col-lg-2 col-md-3">
 
-    <!-- Panel: Options -->
-    <div class="panel panel-default" [ngClass]="{'panel-disabled': !selected}">
-      <div class="panel-heading">Optionen</div>
-      <div class="panel-body text-center">
-        <div class="btn-group" role="group" aria-label="...">
+    <!-- Panel: Layers -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Ebenen</div>
+      <div class="panel-body layer-list max-height">
+        <ul class="list-group" dnd-sortable-container [sortableData]="layers">
+          <!-- User created layers -->
+          <li *ngFor="let item of layers.reverse(); let i = index" class="list-group-item" title="{{item.title}}" dnd-sortable [sortableIndex]="i"
+              (click)="selectLayer(item)" (onDropSuccess)="updateLayerSort()" [ngClass]="{'active': item.active}">
+            <i class="fa fa-fw fa-ellipsis-v" [ngClass]="{'text-muted': !item.active}"></i>
+            <div class="layer-visibility-toggle" (click)="toggleLayer(item)"><i class="fa fa-fw fa-eye" [ngClass]="{'fa-eye': item.visible, 'fa-eye-slash': !item.visible}"></i></div>
+            <div class="layer-title">{{item.title}}</div>
+            <div class="layer-type pull-right">
+              <i class="fa fa-fw {{elementTypes[item.type].icon}}" [ngClass]="{'text-muted': !item.active}"></i>
+            </div>
+            <div class="clearfix"></div>
+          </li>
+          <!-- Background layer -->
+          <li class="list-group-item disabled">
+            <i class="fa fa-fw fa-ellipsis-v text-muted"></i>
+            <div class="layer-visibility-toggle"><i class="fa fa-fw fa-eye"></i></div>
+            <div class="layer-title">Hintergrund</div>
+          </li>
+        </ul>
+      </div>
+      <div class="panel-footer">
+        <div class="btn-group btn-group-sm pull-right" role="group" aria-label="Ebenen-Aktionen" [ngClass]="{'btn-group-disabled': !selected}">
           <button data-toggle="tooltip" data-placement="bottom" title="Element löschen" type="button"
-                  class="btn btn-danger" [disabled]="!selected" (click)="removeSelected();"><i class="fa fa-trash"
+                  class="btn btn-default" [disabled]="!selected" (click)="removeSelected();"><i class="fa fa-trash text-danger"
                                                                                                aria-hidden="true"></i>
           </button>
           <button data-toggle="tooltip" data-placement="bottom" title="In den Hintergrund" type="button"
@@ -160,22 +181,7 @@
                   [disabled]="!selected" (click)="cleanSelect()"><i class="fa fa-remove" aria-hidden="true"></i>
           </button>
         </div>
-      </div>
-    </div>
-    <!-- /Panel: Options -->
-
-    <!-- Panel: Layers -->
-    <div class="panel panel-default">
-      <div class="panel-heading">Ebenen</div>
-      <div class="panel-body layer-list max-height">
-        <ul class="list-group" dnd-sortable-container [sortableData]="layers">
-          <li *ngFor="let item of layers; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i"
-              (click)="selectLayer(item)" [ngClass]="{'active': item.active}">
-            <i class="fa fa-fw fa-ellipsis-v text-muted"></i> <i class="fa fa-fw {{elementTypes[item.type].icon}} text-muted"></i>
-            {{item.title}}
-          </li>
-          <li class="list-group-item disabled"><i class="fa fa-fw fa-ellipsis-v text-muted"></i> Hintergrund</li>
-        </ul>
+        <div class="clearfix"></div>
       </div>
     </div>
     <!-- /Panel: Layers -->
@@ -189,14 +195,13 @@
           Aktive Gruppe
         </div>
 
-        <div class="custom-item" *ngIf="!selected">
+        <div class="custom-item text-muted" *ngIf="!selected">
           <i class="fa fa-crosshairs" aria-hidden="true"></i> Kein Element ausgewählt
         </div>
 
         <div class="custom-item" *ngIf="selected && selected.type != 'group'">
-          <div class="custom-item-title">ID</div>
           <div class="custom-item-body">
-            <input type="text" class="form-control" readonly [(ngModel)]="props.id" (keyup)="setId()"/>
+            ID: {{props.id}} <input type="text" class="form-control" readonly [(ngModel)]="props.id" (keyup)="setId()" *ngIf="false"/>
           </div>
         </div>
 
@@ -314,6 +319,18 @@
           <div class="custom-item-body">
             <input type="range" [(ngModel)]="props.charSpacing" (change)="setCharSpacing()" step="10" min="-200"
                    max="800"/> {{props.charSpacing}}
+          </div>
+        </div>
+
+        <!-- Transforms -->
+        <div class="custom-item" *ngIf="selected">
+          <div class="custom-item-title">Rotation</div>
+          <div class="custom-item-body">
+            <input type="range" [(ngModel)]="props.angle" value="0" min="0" step="1" max="360" (change)="setAngle()">
+          </div>
+          <div class="custom-item-title">Skalierung</div>
+          <div class="custom-item-body">
+            <input type="range" [(ngModel)]="props.scale" value="1" min="0.1" max="3" step="0.1" (change)="setActiveScale(props.scale)">
           </div>
         </div>
 

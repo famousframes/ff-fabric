@@ -1,6 +1,6 @@
 # ff-fabric
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0. The projects UI language is german. 
 
 ## Installation
 
@@ -49,3 +49,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Colors
 
 [Color Theme](https://color.adobe.com/de/Vinter-color-theme-10127686)
+
+## Licenses
+[3rd Party Licenses](https://github.com/famousframes/ff-fabric/blob/master/dist/3rdpartylicenses.txt)
+
+[Brand Logos](http://www.carlogos.org/Car-Logos/)

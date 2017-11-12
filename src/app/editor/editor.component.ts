@@ -4,6 +4,7 @@ import { ColorPickerService } from 'ngx-color-picker';
 import 'fabric';
 declare const fabric: any;
 
+
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -14,6 +15,18 @@ export class EditorComponent implements OnInit {
 
   private canvas: any;
   public projectName: string = 'Neues Design';
+
+  private Direction: any = {
+    LEFT: 0,
+    UP: 1,
+    RIGHT: 2,
+    DOWN: 3
+  };
+  private DirectionSteps: any = {
+    REGULAR: 10,
+    SHIFT: 50
+  };
+
   private props: any = {
     canvasFill: '#ffffff',
     canvasImage: '',
@@ -27,7 +40,9 @@ export class EditorComponent implements OnInit {
     fontStyle: null,
     textAlign: null,
     fontFamily: null,
-    TextDecoration: ''
+    TextDecoration: '',
+    scale: 1,
+    angle: 0
   };
   public elementTypes: any = {
     'image': {key: 'image', text: 'Bild', icon: 'fa-image'},
@@ -38,6 +53,7 @@ export class EditorComponent implements OnInit {
     'polygon': {key: 'polygon', text: 'Stern', icon: 'fa-square'}
   };
   private textString: string = '';
+  public urlName: string = '';
   private url: string = '';
   private size: any = {
     width: 1024,
@@ -66,12 +82,21 @@ export class EditorComponent implements OnInit {
    *
    */
   ngOnInit() {
-
     // setup front side canvas
     this.canvas = new fabric.Canvas('canvas', {
       hoverCursor: 'pointer',
       selection: true,
       selectionBorderColor: 'blue'
+    });
+
+    // register keyboard events
+    fabric.util.addListener(document.body, 'keydown', (opt) => {
+      // console.info(opt);
+      // if(opt.repeat) return;
+
+      let key = opt.which || opt.keyCode;
+
+      this.handleKeyPress(key, opt);
     });
 
     // register fabric.js events
@@ -136,6 +161,47 @@ export class EditorComponent implements OnInit {
 
   }
 
+  handleKeyPress(key, event) {
+    // console.info(key);
+
+    switch(key) {
+      case 37: this.moveSelectedObject(this.Direction.LEFT); event.preventDefault(); break;
+      case 38: this.moveSelectedObject(this.Direction.UP); event.preventDefault(); break;
+      case 39: this.moveSelectedObject(this.Direction.RIGHT); event.preventDefault(); break;
+      case 40: this.moveSelectedObject(this.Direction.DOWN); event.preventDefault(); break;
+      case 46: this.removeSelected(); event.preventDefault(); break;
+    }
+
+  }
+
+  moveSelectedObject(direction) {
+    let activeGroup = this.canvas.getActiveGroup();
+    let activeObject = this.canvas.getActiveObject();
+
+    if(activeObject) {
+      switch (direction) {
+        case this.Direction.LEFT: activeObject.setLeft(activeObject.getLeft() - 10); break;
+        case this.Direction.UP: activeObject.setTop(activeObject.getTop() - 10); break;
+        case this.Direction.RIGHT: activeObject.setLeft(activeObject.getLeft() + 10); break;
+        case this.Direction.DOWN: activeObject.setTop(activeObject.getTop() + 10); break;
+      }
+
+      activeObject.setCoords();
+      this.canvas.renderAll();
+    }
+    else if (activeGroup) {
+      switch (direction) {
+        case this.Direction.LEFT: activeGroup.setLeft(activeGroup.getLeft() - 10); break;
+        case this.Direction.UP: activeGroup.setTop(activeGroup.getTop() - 10); break;
+        case this.Direction.RIGHT: activeGroup.setLeft(activeGroup.getLeft() + 10); break;
+        case this.Direction.DOWN: activeGroup.setTop(activeGroup.getTop() + 10); break;
+      }
+
+      activeGroup.setCoords();
+      this.canvas.renderAll();
+    }
+  }
+
   /**
    * Recalculate layer list for layer panel
    *
@@ -151,6 +217,21 @@ export class EditorComponent implements OnInit {
    */
   selectLayer(layer: any) {
     this.canvas.setActiveObject(layer);
+  }
+
+  toggleLayer(layer: any) {
+    layer.visible = !layer.visible;
+  }
+
+  updateLayerSort() {
+    console.info('Updating sort...', this.layers);
+    let numLayers = this.layers.length;
+
+    this.layers.forEach((layer, ind) => {
+      console.info(layer, ind);
+      this.canvas.moveTo(layer, ind);
+    })
+
   }
 
   /*------------------------Block elements------------------------*/
@@ -191,7 +272,8 @@ export class EditorComponent implements OnInit {
       scaleX: 0.5,
       scaleY: 0.5,
       fontWeight: '',
-      hasRotatingPoint: true
+      hasRotatingPoint: true,
+      title: textString
     });
     this.extend(text, EditorComponent.randomId());
     this.canvas.add(text);
@@ -243,7 +325,8 @@ export class EditorComponent implements OnInit {
           angle: 0,
           padding: 10,
           cornersize: 10,
-          hasRotatingPoint: true
+          hasRotatingPoint: true,
+          title: this.urlName
         });
         image.scaleToWidth(Math.round(this.size.width / 2));
         this.extend(image, EditorComponent.randomId());
@@ -262,6 +345,8 @@ export class EditorComponent implements OnInit {
    */
   readUrl(event) {
     if (event.target.files && event.target.files[0]) {
+      console.info(event.target.files[0]);
+      this.urlName = event.target.files[0].name;
       let reader = new FileReader();
       reader.onload = (event) => {
         this.url = event.target['result'];
@@ -291,23 +376,25 @@ export class EditorComponent implements OnInit {
       case 'rectangle':
         add = new fabric.Rect({
           width: 200, height: 100, left: 10, top: 10, angle: 0,
-          fill: '#3f51b5'
+          fill: '#3f51b5',
+          title: 'Rechteck'
         });
         break;
       case 'square':
         add = new fabric.Rect({
           width: 100, height: 100, left: 10, top: 10, angle: 0,
-          fill: '#4caf50'
+          fill: '#4caf50',
+          title: 'Rechteck'
         });
         break;
       case 'triangle':
         add = new fabric.Triangle({
-          width: 100, height: 100, left: 10, top: 10, fill: '#2196f3'
+          width: 100, height: 100, left: 10, top: 10, fill: '#2196f3', title: 'Dreieck'
         });
         break;
       case 'circle':
         add = new fabric.Circle({
-          radius: 50, left: 10, top: 10, fill: '#ff5722'
+          radius: 50, left: 10, top: 10, fill: '#ff5722', title: 'Kreis'
         });
         break;
       case 'star':
@@ -326,7 +413,8 @@ export class EditorComponent implements OnInit {
           left: 10,
           fill: '#ff5722',
           stroke: '#ff5722',
-          strokeWidth: 2
+          strokeWidth: 2,
+          title: 'Stern'
         });
         break;
     }
@@ -453,6 +541,13 @@ export class EditorComponent implements OnInit {
     let object = this.canvas.getActiveObject();
     if (!object) return;
     object.set(name, value).setCoords();
+    this.canvas.renderAll();
+  }
+
+  setActiveScale(value) {
+    let object = this.canvas.getActiveObject();
+    if (!object) return;
+    object.scale(parseFloat(value)).setCoords();
     this.canvas.renderAll();
   }
 
@@ -604,6 +699,10 @@ export class EditorComponent implements OnInit {
 
   setFontFamily() {
     this.setActiveProp('fontFamily', this.props.fontFamily);
+  }
+
+  setAngle() {
+    this.setActiveProp('angle', parseInt(this.props.angle));
   }
 
 

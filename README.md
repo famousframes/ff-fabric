@@ -1,6 +1,11 @@
 # ff-fabric
+Yet another image editor based on FabricJS and Angular.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0. The projects UI language is german. 
+
+## Dependencies
+
+[Node.js](https://nodejs.org/en/)
 
 ## Installation
 
@@ -46,11 +51,13 @@ Shortcut tasks are available for npm:
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+[Angular Docs](https://angular.io/docs)
+[Bootstrap Docs](https://ng-bootstrap.github.io/#/components)
+[Fabric Docs](http://fabricjs.com/docs/)
+
 ## Colors
 
 [Color Theme](https://color.adobe.com/de/Vinter-color-theme-10127686)
 
-## Licenses
-[3rd Party Licenses](https://github.com/famousframes/ff-fabric/blob/master/dist/3rdpartylicenses.txt)
-
-[Brand Logos](http://www.carlogos.org/Car-Logos/)
+## 3rd Party
+[carlogos.org](http://www.carlogos.org/Car-Logos/)

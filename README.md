@@ -1,5 +1,5 @@
 # ff-fabric
-Yet another image editor based on FabricJS and Angular.
+Yet another image editor based on FabricJS and Angular. Here's a [demo](https://famousframes.github.io/).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0. The projects UI language is german. 
 

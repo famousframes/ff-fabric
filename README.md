@@ -40,7 +40,7 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 Shortcut tasks are available for npm:
 - `npm start` - (ng serve --o)
-- `npm build` - (ng build)
+- `npm run build` - (ng build)
 - `npm run dist` - (ng build -prod --aot=false)
 - `npm test` - (ng test)
 - `npm lint` - (ng lint)

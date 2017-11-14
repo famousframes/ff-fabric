@@ -27,10 +27,30 @@ export class EditorComponent implements OnInit {
     REGULAR: 1,
     SHIFT: 5
   };
+  private dragObject: any;
 
   public presetFonts = ['Arial', 'Serif', 'Helvetica', 'Sans-Serif', 'Open Sans', 'Roboto Slab'];
 
   public selectedLibrary: string = 'brands';
+  public palette: any = [
+    {key: '001f3f', value: 'Navy'},
+    {key: '0074D9', value: 'Blue'},
+    {key: '7FDBFF', value: 'Aqua'},
+    {key: '39CCCC', value: 'Teal'},
+    {key: '3D9970', value: 'Olive'},
+    {key: '2ECC40', value: 'Green'},
+    {key: '01FF70', value: 'Lime'},
+    {key: 'FFDC00', value: 'Yellow'},
+    {key: 'FF851B', value: 'Orange'},
+    {key: 'FF4136', value: 'Red'},
+    {key: '85144b', value: 'Maroon'},
+    {key: 'F012BE', value: 'Fuchsia'},
+    {key: 'B10DC9', value: 'Purple'},
+    {key: '111111', value: 'Black'},
+    {key: 'AAAAAA', value: 'Gray'},
+    {key: 'DDDDDD', value: 'Silver'}
+  ];
+
   public library: any = {
     brands: [
       {name: 'Audi', src: 'assets/libraries/brands/audi-sd.png'},
@@ -955,6 +975,50 @@ export class EditorComponent implements OnInit {
     if (confirm('Alles zurücksetzen?')) {
       this.canvas.clear();
     }
+  }
+
+
+  handleDragStart(event) {
+    this.dragObject = event.target;
+    return false;
+  }
+
+  handleDragOverCanvas(event) {
+    event.stopPropagation();
+    return false; // prevenDefault;
+  }
+
+  /**
+   *
+   * @param event
+   */
+  handleDropOnCanvas(event) :boolean {
+    if(event.stopPropagation) event.stopPropagation();
+
+    let el = this.dragObject;
+    fabric.Image.fromURL(el.src, (image) => {
+      image.set({
+        originX: 'center',
+        originY: 'center',
+        left: event.layerX,
+        top: event.layerY,
+        angle: 0,
+        padding: 10,
+        cornersize: 10,
+        hasRotatingPoint: true,
+        title: el.title,
+        lockUniScaling: true
+      });
+      image.scaleToWidth(150);
+      image.scaleToHeight(150);
+      this.extend(image, EditorComponent.randomId());
+      this.canvas.add(image);
+      this.selectItemAfterAdded(image);
+    });
+
+    this.updateLayers();
+    this.dragObject = null;
+    return false;
   }
 
   /**

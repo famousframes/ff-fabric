@@ -194,14 +194,15 @@
     <!-- /Panel: Layers -->
 
     <!-- Panel: Color Palette -->
-    <div class="panel panel-default">
+    <div class="panel panel-default no-select" *ngIf="selected && textEditor || selected && shapeEditor">
       <div class="panel-heading">Farbpalette</div>
       <div class="panel-body">
-        <ul class="color-swatch-presets">
-          <li class="color-swatch" *ngFor="let p of palette">{{p.value}}</li>
+        <ul class="color-swatch-presets list-inline">
+          <li class="color-swatch" *ngFor="let p of palette" title="{{p.value}}" (click)="setFillColor(p.key)" [ngStyle]="{'background-color': '#' + p.key}">&nbsp;</li>
         </ul>
       </div>
     </div>
+    <!-- /Panel: Color Palette -->
 
     <!-- Panel: Element Settings -->
     <div class="panel panel-default">

@@ -193,12 +193,23 @@ div.font-select {
     margin: 5px 0;
 }
 
-.color-swatch-presets {
+.panel-palettes ul.list-inline {
     margin-bottom: 0;
 }
-.color-swatch-presets .color-swatch{
+
+.panel-palettes ul.list-inline:not(:first-child) {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid #ccc;
+}
+
+.color-swatch{
     width: 20px;
     height: 20px;
     margin-right: 5px;
     cursor: pointer;
+    border: 1px solid #fff;
+}
+.color-swatch.selected {
+    border: 1px dotted #333;
 }

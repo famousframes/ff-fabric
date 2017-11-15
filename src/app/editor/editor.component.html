@@ -41,7 +41,7 @@
   <div class="col-lg-2 col-md-3">
 
     <!-- Panel: Text -->
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-text">
       <div class="panel-heading no-select">Text hinzufügen</div>
       <div class="panel-body">
         <div class="input-group">
@@ -70,7 +70,9 @@
         </div>
         <div class="custom-item max-height">
           <div class="custom-item-body">
-            <img class="images-item" *ngFor="let image of library[selectedLibrary]" [lazyLoad]="image.src" ngbTooltip="{{image.name}}" title="{{image.name}}" (click)="getImgPolaroid($event)" (drag)="handleDragStart($event)" />
+            <img class="images-item" *ngFor="let image of library[selectedLibrary]" [lazyLoad]="image.src"
+                 ngbTooltip="{{image.name}}" title="{{image.name}}" (click)="getImgPolaroid($event)"
+                 (drag)="handleDragStart($event)"/>
           </div>
         </div>
       </div>
@@ -78,7 +80,7 @@
     <!-- /Panel: Library -->
 
     <!-- Panel: Image Upload -->
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-upload">
       <div class="panel-heading">Eigenes Bild hochladen</div>
       <div class="panel-body text-center">
         <img id="testImage" *ngIf="url" class="images-item-upload" [src]="url" (click)="addImageOnCanvas(url);"/>
@@ -98,8 +100,8 @@
     </div>
     <!-- /Panel: Image Upload -->
 
-    <!-- Panel: Form-Elements -->
-    <div class="panel panel-default">
+    <!-- Panel: Shapes -->
+    <div class="panel panel-default panel-shapes">
       <div class="panel-heading">Form-Elemente</div>
       <div class="panel-body text-center">
         <div class="btn-group btn-group-lg" role="group" aria-label="Form-Elemente">
@@ -116,7 +118,7 @@
         </div>
       </div>
     </div>
-    <!-- /Panel: Form-Elements -->
+    <!-- /Panel: Shapes -->
 
   </div>
   <!-- /Sidebar: Left -->
@@ -133,7 +135,7 @@
   <div class="col-lg-2 col-md-3">
 
     <!-- Panel: Layers -->
-    <div class="panel panel-default no-select">
+    <div class="panel panel-default panel-layers no-select">
       <div class="panel-heading">Ebenen</div>
       <div class="panel-body layer-list max-height">
         <ul class="list-group" dnd-sortable-container [sortableData]="layers.reverse()">
@@ -185,7 +187,9 @@
           </button>
           <button ngbTooltip="Ebene sperren" title="Ebene sperren" type="button" class="btn btn-default"
                   [disabled]="!selected" (click)="lockLayer()">
-            <i class="fa fa-lock" [ngClass]="{'fa-lock': !selected || (selected && selected.selectable), 'fa-unlock': (selected && !selected.selectable)}" aria-hidden="true"></i>
+            <i class="fa fa-lock"
+               [ngClass]="{'fa-lock': !selected || (selected && selected.selectable), 'fa-unlock': (selected && !selected.selectable)}"
+               aria-hidden="true"></i>
           </button>
         </div>
         <div class="clearfix"></div>
@@ -193,19 +197,37 @@
     </div>
     <!-- /Panel: Layers -->
 
-    <!-- Panel: Color Palette -->
-    <div class="panel panel-default no-select" *ngIf="selected && textEditor || selected && shapeEditor">
+    <!-- Panel: Color Palettes -->
+    <div class="panel panel-default panel-palettes no-select">
       <div class="panel-heading">Farbpalette</div>
-      <div class="panel-body">
-        <ul class="color-swatch-presets list-inline">
-          <li class="color-swatch" *ngFor="let p of palette" title="{{p.value}}" (click)="setFillColor(p.key)" [ngStyle]="{'background-color': '#' + p.key}">&nbsp;</li>
+      <div class="panel-body max-height">
+        <ul class="list-inline">
+          <li class="color-swatch" *ngFor="let p of palettes.defaults" title="{{p.value}}" (click)="setFillColor(p)"
+              [ngStyle]="{'background-color': p.key}" [ngClass]="{'selected': palettes.selected === p}">
+            &nbsp;</li>
+        </ul>
+        <ul class="color-swatch-custom list-inline">
+          <li class="color-swatch" *ngFor="let p of palettes.custom" title="{{p.value}}" (click)="setFillColor(p)"
+              [ngStyle]="{'background-color': p.key}" [ngClass]="{'selected': palettes.selected === p}">&nbsp;</li>
         </ul>
       </div>
+      <div class="panel-footer">
+        <div class="btn-group btn-group-sm pull-right" role="group" aria-label="Farbpaletten-Aktionen"
+             [ngClass]="{'btn-group-disabled': palettes.selected === null}">
+          <button ngbTooltip="Farbe löschen" title="Farbe löschen" type="button"
+                  class="btn btn-default" [disabled]="palettes.selected === null || palettes.selected.type !== undefined"
+                  (click)="removeSelectedColorSwatch();"><i
+              class="fa fa-trash text-danger"
+              aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
     </div>
-    <!-- /Panel: Color Palette -->
+    <!-- /Panel: Color Palettes -->
 
     <!-- Panel: Element Settings -->
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-element-settings">
       <div class="panel-heading">Element-Einstellungen</div>
       <div class="panel-body">
 
@@ -243,16 +265,26 @@
         <div class="custom-item" *ngIf="selected && textEditor || selected && shapeEditor">
           <div class="custom-item-title">Füllfarbe</div>
           <div class="custom-item-body">
-            <input type="text" class="form-control" [cpPosition]="'bottom'" [(colorPicker)]="props.fill"
-                   [style.background]="props.fill" [value]="props.fill" (colorPickerChange)="setFill()"/>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" [cpPosition]="'left'" [(colorPicker)]="props.fill"
+                     [style.background]="props.fill" [value]="props.fill" (colorPickerChange)="setFill()"/>
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="addToCustomPalette('fill')"><i class="fa fa-floppy-o"></i></button>
+              </span>
+            </div>
           </div>
         </div>
 
         <div class="custom-item" *ngIf="selected && textEditor || selected && shapeEditor">
           <div class="custom-item-title">Rahmenfarbe</div>
           <div class="custom-item-body">
-            <input type="text" class="form-control" [cpPosition]="'bottom'" [(colorPicker)]="props.stroke"
-                   [style.background]="props.stroke" [value]="props.stroke" (colorPickerChange)="setStroke()"/>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" [cpPosition]="'left'" [(colorPicker)]="props.stroke"
+                     [style.background]="props.stroke" [value]="props.stroke" (colorPickerChange)="setStroke()"/>
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="addToCustomPalette('stroke')"><i class="fa fa-floppy-o"></i></button>
+              </span>
+            </div>
           </div>
         </div>
 
@@ -382,7 +414,7 @@
     <!-- /Panel: Element Settings -->
 
     <!-- Panel: Canvas Settings -->
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-canvas-settings">
       <div class="panel-heading">Bühne</div>
       <div class="panel-body">
 
@@ -418,8 +450,8 @@
         <div class="custom-item" *ngIf="!props.canvasImage">
           <div class="custom-item-title">Hintergrundfarbe</div>
           <div class="custom-item-body">
-            <input type="text" class="form-control" [cpPosition]="'bottom'" [(colorPicker)]="props.canvasFill"
-                   [style.background]="props.canvasFill" [value]="props.canvasFill"
+            <input type="text" class="form-control" [cpPosition]="'left'" [cpPresetColors]="customColors" [cpOKButton]="true" [cpAddColorButtonText]="'Speichern'" [cpAddColorButton]="true" [cpOKButtonClass]="'btn btn-light btn-sm'" [cpSaveClickOutside]="false" [(colorPicker)]="props.canvasFill"
+                   [style.background]="props.canvasFill" [value]="props.canvasFill" (cpPresetColorsChange)="updateColorPresets($event)"
                    (colorPickerChange)="setCanvasFill()"/>
           </div>
         </div>
